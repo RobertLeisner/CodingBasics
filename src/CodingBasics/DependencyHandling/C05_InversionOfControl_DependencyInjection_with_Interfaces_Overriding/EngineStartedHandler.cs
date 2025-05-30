@@ -1,0 +1,3 @@
+﻿namespace CodingBasics.DependencyHandling.C05_InversionOfControl_DependencyInjection_with_Interfaces_Overriding;
+
+public delegate void EngineStartedHandler(object sender, EngineStartedEventHandlerArgs args);

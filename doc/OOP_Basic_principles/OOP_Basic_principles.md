@@ -1,17 +1,16 @@
-# Object-oriented-programming (OOP) with C#
+Object-oriented-programming (OOP) with C#
+================
 
+# Object-oriented-programming versus functional programming
 
-## Object-oriented-programming versus functional programming
-
-### Functional programming
+## Functional programming
 
 The first programming languages were functional languages. All code is organized in methods which can be controlled with input parameters. 
 This coding style is limited as complexer development tasks lead to methods calls with endless parameter list. This makes the code less readable and difficult to test.
 
 One weekness of functional programming is that keeping a data state is difficult to implement.
 
-```
-
+``` csharp
 public int Calculate2Numbers(int number1, int number2)
 {
 
@@ -33,13 +32,11 @@ public void DoSomething
 	Debug.Print(result);
 
 }
-
-
 ```
 
 Functional programming is very performant i.e. in mathematical context. Implement processes in business context is painful.
 
-### Object-oriented-programming
+## Object-oriented-programming
 
 OOP means a programming style where all code is organzied in objects with properties, methods and events. 
 
@@ -56,8 +53,7 @@ Methods are giving activity to an object. A car object will have a StartEngine m
 Events add the possiblity to react on certain situations a object is in. Imagine an event "EngineStarted" for a car object.
 
 
-```
-
+``` csharp
 public void DoSomething()
 {
 
@@ -72,15 +68,30 @@ public void DoSomething()
 
 }
 
-
 public void OnEngineStarted(EventArgs args)
 {
 	// Do something if the car is started
 }
-
 ```
 
-## Basic principles of object-oriented programming
+# Basic principles of object-oriented programming
+
+## S.O.L.I.D: the five basic principles of object-oriented programming and design
+
+The SOLID concepts are:
+
+-	The Single-responsibility principle: "There should never be more than one reason for a class to change.". In other words, every class should have only one responsibility.
+
+-	The Open-closed principle: "Software entities ... should be open for extension, but closed for modification."
+
+-	The Liskov substitution principle: "Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it". See also design by contract.
+
+-	The Interface segregation principle: "Many client-specific interfaces are better than one general-purpose interface."
+
+-	The Dependency inversion principle: "Depend upon abstractions, not concretions." 
+
+
+Source: https://en.wikipedia.org/wiki/SOLID
 
 ### S.O.L.I.D: the five basic principles of object-oriented programming and design
 
@@ -99,25 +110,8 @@ The SOLID concepts are:
 
 Source: https://en.wikipedia.org/wiki/SOLID
 
-#### S.O.L.I.D: the five basic principles of object-oriented programming and design
 
-The SOLID concepts are:
-
--	The Single-responsibility principle: "There should never be more than one reason for a class to change.". In other words, every class should have only one responsibility.
-
--	The Open-closed principle: "Software entities ... should be open for extension, but closed for modification."
-
--	The Liskov substitution principle: "Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it". See also design by contract.
-
--	The Interface segregation principle: "Many client-specific interfaces are better than one general-purpose interface."
-
--	The Dependency inversion principle: "Depend upon abstractions, not concretions." 
-
-
-Source: https://en.wikipedia.org/wiki/SOLID
-
-
-#### Inversion of control (IoC) - the concept behind DI
+### Inversion of control (IoC) - the concept behind DI
 
 This states that a class should not configure its dependencies statically but should be configured by some other class from outside.
 
@@ -125,8 +119,7 @@ It is the fifth principle of S.O.L.I.D which states that a class should depend o
 
 According to the principles, a class should concentrate on fulfilling its responsibilities and not on creating objects that it requires to fulfill those responsibilities. And that's where dependency injection comes into play: it provides the class with the required objects.
 
-```
-
+``` csharp
 /// <summary>
 /// Class represents a car
 /// </summary>
@@ -147,13 +140,11 @@ public class Car
 
 	...
 }
-
 ```
 
 The Engine class can't be replaced i.e. with another implementation or a fake for unit testing
 
-```
-
+``` csharp
 /// <summary>
 /// Class represents a car
 /// </summary>
@@ -178,14 +169,13 @@ public class Car
 	...
 
 }
-
 ```
 
 The Engine class can easily be replaced with another implementation or a fake for unit testing.
 
 IoC makes only sense with the introduction of interfaces!
 
-#### Dependency injection (DI)
+### Dependency injection (DI)
 
 Dependency injection makes loose coupling of classes possible. The main question is: how do I get my required dependencies in a class from outside the class. Benefits of using DI are:
 	
@@ -208,14 +198,13 @@ implement an interface that exposes a setter method that accepts the dependency.
 
 Service locator style of injection may be called a type of dependency injection too but its usage isn't recommend (see below).
 
-#### Constructor injection
+### Constructor injection
 
 
 The dependencies of a class are injected via the constructor of a class. This is the preferred way on dependency injection.
 
 
-```
-
+``` csharp
 // Using default spellchecker	
 IEngine engine = new XEngine()
 var carWithEngineX = new Car(engine)
@@ -227,23 +216,20 @@ var carWithEngineY = new Car(engine)
 // Using a fake for testing	
 engine = new FakeEngine()
 var carWithFakeEngine = new Car(engine)
-
 ```
 
-#### Service locator style of injection
+### Service locator style of injection
 
 Via a central dependency manager a required dependency is resolved from inside the class:
 
-```
-
+``` csharp
 var instance = DependencyManager.GetInstance<ICar>()
-
 ```
 
 This type of dependency injection works but is not very transparent from outside the class. Therefore it should by avoided and replaced by constructor injection.
 
 
-## Inheritance
+# Inheritance
 
 Imagine a class representing a car. As we all know there are a lot do different brands of cars. 
 All these different types of cars have common properties, methods and events. Lets take the method "StartEngine" of a car. All cars will have such a functionality. 
@@ -251,13 +237,13 @@ But all types of cars will handle this functionality in a different manner.
 
 Inheritance makes it possible to implement a common behaviour in a different manner.
 
-### Simple inheritance
+## Simple inheritance
 
 Simple inheritance is relatively easy to understand but not very helpfull in reality.
 
 See the follwoing code:
 
-```
+``` csharp
 /// <summary>
 /// Base class car
 /// </summary>
@@ -327,13 +313,11 @@ public class CarBrandAModelY : CarBrandA
         TypeName = "Model Y";
     }
 }
-	
 ```
 
 See the following tests what simple inheritance is doing for you:
 
-```
-
+``` csharp
 [Test]
 public void Car_StartEngine_WriteTextinDebugWindow()
 {
@@ -397,14 +381,13 @@ public void CarBrandAModelY_StartEngine_WriteTextinDebugWindow()
     // Writes:Engine of car model BrandACompany Model Y starts...
 
 }
-
 ```
 
 Simple inheritance makes it possible to inherite properties, methods and events from a base class (here Car class). 
 The weakness of simple inheritance is that you cannot change the behaviour of the base class implementation of i.e. a method (here StartEngine).
 To add additional functionality to a class (subclass) inheriting from another class is possible.
 
-### Inheritance with overriding
+## Inheritance with overriding
 
 Overriding means you implement a property, a method or an event in a subclass in another manner then in the base class. Devs speak of "overriding a method/property/event"
 
@@ -413,8 +396,7 @@ Class intended as base class wil be marked "abtract" in the most cases as they n
 Methods intended to be overriden have to marked as "virtual".
 
 
-```
-
+``` csharp
     /// <summary>
     /// Base class car
     /// </summary>
@@ -509,13 +491,11 @@ Methods intended to be overriden have to marked as "virtual".
         }
 
     }
-
 ```
 
 See the following tests what inheritance with overriding is doing for you:
 
 ```
-
  [Test]
  public void CarBrandAModelX_StartEngine_WriteTextinDebugWindow()
  {
@@ -545,7 +525,6 @@ See the following tests what inheritance with overriding is doing for you:
      // Writes: Engine of car model BrandACompany Model Y starts...
 
  }
-
 ```
 
 
@@ -555,8 +534,7 @@ Interfaces are contracts to describe which properties, methods and events a cert
 
 Using interfaces instead of concrete object classes makes code more flexible. 
 
-```
-
+``` csharp
     /// <summary>
     /// Interface for cr engine implementations
     /// </summary>
@@ -583,21 +561,19 @@ Using interfaces instead of concrete object classes makes code more flexible.
         }
 
     }
-
-
 ```
 
 
-## Basic development principles
+# Basic development principles
 
-### Methods
+## Methods
 
 Methods should fulfill only one purpose.
 
 A method should contain a maximum of 10 lines of code.
 
 
-### Usage of constructors
+## Usage of constructors
 
 Constructors (or short ctors) should be only only to setup the class and accept dependencies from outside for implementing the inversion of control principle (see below).
 
@@ -609,17 +585,13 @@ loading required data from class external data sources
 Such funtionality should be located outside the ctor. This makes the class and the ctor more testable
 
 
-```
+## Dependency handling
 
-### Dependency handling
-
-#### Tight coupled approach
+### Tight coupled approach
 
 The tight coupled approach is the approach you see often in beginner projects lacking knowledge.
 
-```
-
-
+``` csharp
     /// <summary>
     /// Class represents a car
     /// </summary>
@@ -706,10 +678,9 @@ The tight coupled approach is the approach you see often in beginner projects la
         public string Message { get; set; }
 
     }
-
 ```
 
-```
+``` csharp
 
     private bool _wasEventFired;
 
@@ -745,7 +716,7 @@ The tight coupled approach is the approach you see often in beginner projects la
 ```
 	
 
-#### Loosely coupled approach with IoC and dependency injection (DI)
+### Loosely coupled approach with IoC and dependency injection (DI)
 
 IoC means that not the consumer of a dependency is responsible for the creation of the dependency but the external environment of the consumer: the consumer gets the required dependencies "injected" via ctor.
 
@@ -753,8 +724,7 @@ Using IoC enhances flexibility and testability of the code.
 
 It improves the readability of the code and makes it easier to understand what the code is doing and what dependencies are required.
 
-
-```
+``` csharp
 
     /// <summary>
     /// Class represents a car
@@ -840,13 +810,9 @@ It improves the readability of the code and makes it easier to understand what t
         public string Message { get; set; }
 
     }
-
-
 ```
 
-
-```
-
+``` csharp
     private bool _wasEventFired;
 
     [Test]
@@ -882,14 +848,11 @@ It improves the readability of the code and makes it easier to understand what t
         Debug.Print(args.Message);
         _wasEventFired = true;
     }
-
 ```
 
+### Loosely coupled approach with IoC and dependency injection and interfaces (DI)
 
-#### Loosely coupled approach with IoC and dependency injection and interfaces (DI)
-
-```
-
+``` csharp
     /// <summary>
     /// Interface for car implementations
     /// </summary>
@@ -1016,19 +979,16 @@ It improves the readability of the code and makes it easier to understand what t
         }
 
     }
-
 ```
 
-```
+``` csharp
 
 
 ```
 
 #### Loosely coupled approach with IoC and dependency injection and interfaces and overriding (DI)
 
-```
-
-
+``` csharp
     /// <summary>
     /// Interface for car implementations
     /// </summary>
@@ -1235,7 +1195,7 @@ It improves the readability of the code and makes it easier to understand what t
 ```
 
 
-```
+``` csharp
 
     private bool _wasEventFired;
 
@@ -1293,16 +1253,13 @@ It improves the readability of the code and makes it easier to understand what t
         Debug.Print(args.Message);
         _wasEventFired = true;
     }
-
 ```
 
-
-
-#### Loosely coupled approach using a DI container
+### Loosely coupled approach using a DI container
 
 A DI container is responsible is to store the information of all types of available objects in app and how to create it.
 
-#### Service locator pattern
+### Service locator pattern
 
 The service locator is a pattern to call a dependency directly at the place the dependency is used.
 
@@ -1311,8 +1268,7 @@ You should try to avoid the usage of service locator pattern. It weakens readabi
 There are rare situations where you have to use the service locator pattern i.e. during setting up a dependency injection (DI) container.
 
 
-```
-
+``` csharp
 public class TextEditor 
 { 
 	private SpellChecker _checker; 

@@ -10,7 +10,6 @@ Use Benchmark Viewer to visualize order running, transaction or other longer run
 
 
 ``` csharp
-
 [Test]
 public void CreateABench_DefaultSetup_FileWritten()
 {
@@ -55,7 +54,6 @@ public void CreateABench_DefaultSetup_FileWritten()
 For apps making heavy usages off Bench it is recommend to switch to BenchReusable based on IBench too. The following example shows a typical use case having only one Benchmark Viewer CSV file:
 
 ``` csharp
-
 [Test]
 public void CreateABenchReusable_TypicalSetupForAnApp_FileWritten()
 {

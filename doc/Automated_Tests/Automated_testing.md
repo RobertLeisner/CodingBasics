@@ -1,12 +1,13 @@
-# Automated testing during development
+Automated testing during development
+==============
 
-## Overview
+# Overview
 
 Automated testing during development is an important step to make development more productive and robust. 
 
 It leads to faster deployment circles with better code quality.
 
-## Why do we need (automated) unit testing?
+# Why do we need (automated) unit testing?
 
 One of the most valuable benefits of using testing like unit tests for your development is that it may give you positive confidence that your code will work as you have expected it to work in your development process. Unit tests always give you the certainty that it will lead to a long term development phase because with the help of unit tests you can easily know that your foundation code block is totally dependable on it.
 
@@ -30,9 +31,9 @@ There are few reasons that can give you a basic understanding of why a developer
 
 Read more at - http://agiledata.org/essays/tdd.html
 
-## Basics on testing
+# Basics on testing
 
-### Manually testing (functional testing)
+## Manually testing (functional testing)
 
 Manual testing is most basic kind of testing a source code. Manual testing means starting the app and test certain functionality by clicking buttons, inserting data etc. and then checking the result produced by the app.
 
@@ -47,13 +48,13 @@ Manual testing is most basic kind of testing a source code. Manual testing means
 
 -	Testing code with different real world situations is nearly impossible
 
-### Unit testing and integration testing
+## Unit testing and integration testing
 
 Unit tests are easy to write in C# if you employ a test framework like NUnit.
 
 If your tests requires infrastructure dependencies like databases we speak normally not of unit tests but of integration tests.
 
-### Characteristics of a good unit test
+## Characteristics of a good unit test
 
 -	Fast: It isn't uncommon for mature projects to have thousands of unit tests. Unit tests should take little time to run. Milliseconds.
 
@@ -67,7 +68,7 @@ If your tests requires infrastructure dependencies like databases we speak norma
 
 Source: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
 
-### Test driven development TDD
+## Test driven development TDD
 
 Unit testing refers to what you are testing, TDD to when you are testing.
 
@@ -101,7 +102,7 @@ TDD provides some aspects for good coding:
 -	The cycle of Red-Green-Refactor is the absolute procrastination killer!
 
 
-### TDD: The cycle of Red-Green-Refactor
+## TDD: The cycle of Red-Green-Refactor
 
 The cycle of Red-Green-Refactor is one of the most powerful tools to achieve good source code quality and productivity. 
 
@@ -127,7 +128,7 @@ Refactor
 
 See a sample for the AAA pattern in a test method:
 
-```
+``` csharp
 	[Test]
 	public void IsPrime_InputIs1_ReturnFalse()
 	{
@@ -144,11 +145,11 @@ See a sample for the AAA pattern in a test method:
 ```
 
 
-## Practical unit testing
+# Practical unit testing
 
-### Prerequisites for unit testing
+## Prerequisites for unit testing
 
-#### Add required test projects
+### Add required test projects
 
 As a rule of thumb there should be one unit test project per productive project in a solution. A solution built with three layers (data, business and UI) should have three test projects: one unit test project per level.
 
@@ -156,11 +157,11 @@ If your tests requires infrastructure dependencies like databases we speak norma
 
 Choose the correct VS project template for NUnit testing of .NET Core.
 
-#### Add a AssemblySetup class to each test project
+### Add a AssemblySetup class to each test project
 
 AssemblySetup class is intended to setup the general environment for the test before the tests are running. Setup for logging, test data environment etc will be done in this class. After finishing the test you can implement a cleanup method to clean the test environment from old data etc.
 
-```
+``` csharp
 
 /// <summary>
 /// Setup and cleanup for the whole test assembly
@@ -183,16 +184,14 @@ public static class AssemblySetup
 	}
 	
 }
-
 ```
 
 
-### Create test classes
+## Create test classes
 
 Here a sample of a test class for a fictive PrimeService class:
 
-```
-
+``` csharp
 [TestFixture]
 public class UnitTest_PrimeService
 {
@@ -224,7 +223,6 @@ public class UnitTest_PrimeService
 		Assert.IsFalse(result, "1 should not be prime");
 	}
 }
-
 ```
 
 Create separate (at least one) test class for each productive class to test. SetUp and TearDown methods are not required but especially for integration testing with more complex scenarios it does make sense to use them to define exact test scenarios and to save ressources. 
@@ -232,7 +230,7 @@ Create separate (at least one) test class for each productive class to test. Set
 
 Each single test in a test class is marked with the [Test] (or the [TestCase] attribute in more complex data driven tests). 
 
-### Naming conventions for test projects, test classes and test methods
+## Naming conventions for test projects, test classes and test methods
 
 A common naming convention for tests classes and methods you see in the above sample.
 
@@ -246,11 +244,11 @@ For more details see: https://learn.microsoft.com/en-us/dotnet/core/testing/unit
 
 
 
-### Code design for unit testing and TDD
+## Code design for unit testing and TDD
 
 Automated testing with unit tests requires a loosely coupled app design, which makes it possible to replace dependencies with other implementations or fakes.
 
-#### S.O.L.I.D: the five basic principles of object-oriented programming and design
+### S.O.L.I.D: the five basic principles of object-oriented programming and design
 
 The SOLID concepts are:
 
@@ -268,7 +266,7 @@ The SOLID concepts are:
 Source: https://en.wikipedia.org/wiki/SOLID
 
 
-#### Inversion of control (IoC) - the concept behind DI
+### Inversion of control (IoC) - the concept behind DI
 
 This states that a class should not configure its dependencies statically but should be configured by some other class from outside.
 
@@ -276,8 +274,7 @@ It is the fifth principle of S.O.L.I.D which states that a class should depend o
 
 According to the principles, a class should concentrate on fulfilling its responsibilities and not on creating objects that it requires to fulfill those responsibilities. And that's where dependency injection comes into play: it provides the class with the required objects.
 
-```
-
+``` csharp
 /// <summary>
 /// Class represents a car
 /// </summary>
@@ -298,13 +295,11 @@ public class Car
 
 	...
 }
-
 ```
 
 The Engine class can't be replaced i.e. with another implementation or a fake for unit testing
 
-```
-
+``` csharp
 /// <summary>
 /// Class represents a car
 /// </summary>
@@ -329,14 +324,13 @@ public class Car
 	...
 
 }
-
 ```
 
 The Engine class can easily be replaced with another implementation or a fake for unit testing.
 
 IoC makes only sense with the introduction of interfaces!
 
-#### Dependency injection (DI)
+### Dependency injection (DI)
 
 Dependency injection makes loose coupling of classes possible. The main question is: how do I get my required dependencies in a class from outside the class. Benefits of using DI are:
 
@@ -369,8 +363,7 @@ Service locator style of injection may be called a type of dependency injection 
 The dependencies of a class are injected via the constructor of a class. This is the preferred way on dependency injection.
 
 
-```
-
+``` csharp
 // Using default spellchecker	
 ISpellChecker _checker  =new XSpellChecker()
 var editor = new TextEditor(_checker)
@@ -382,27 +375,24 @@ var editor = new TextEditor(_checker)
 // Using a fake for testing	
 var _checker  =new FakeSpellChecker()
 var editor = new TextEditor(_checker)
-
 ```
 
-#### Service locator style of injection
+### Service locator style of injection
 
 Via a central dependency manager a required dependency is resolved from inside the class:
 
-```
-
+``` csharp
 var instance = DependencyManager.GetInstance<ISpellChecker>()
-
 ```
 
 This type of dependency injection works but is not very transparent from outside the class. Therefore it should by avoided and replaced by constructor injection.
 
-## Test doubles: faking, stubbing and mocking
+# Test doubles: faking, stubbing and mocking
 Based on: Test Doubles - Fakes, Mocks and Stubs. | by Michal Lipski | Pragmatists https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs
 
 In automated testing it is common to use objects that look and behave like their production equivalents, but are actually simplified. This reduces complexity, allows to verify code independently from the rest of the system and sometimes it is even necessary to execute self validating tests at all. A Test Double is a generic term used for these objects.
 
-### Fake
+## Fake
 
 Fakes are objects that have working implementations, but not same as production one. Usually they take some shortcut and have simplified version of production code.
 
@@ -415,7 +405,7 @@ Source: https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs
 Apart from testing, fake implementation can come handy for prototyping and spikes. We can quickly implement and run our system with in-memory store, deferring decisions about database design. Another example can be also a fake payment system, that will always return successful payments.
 
 
-### Stub
+## Stub
 
 Stub is an object that holds predefined data and uses it to answer calls during tests. It is used when we cannot or don't want to involve objects that would answer with real data or have undesirable side effects.
 
@@ -427,7 +417,7 @@ Source: https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs
 
 Instead of calling database from Gradebook store to get real students grades, we preconfigure stub with grades that will be returned. We define just enough data to test average calculation algorithm.
 
-#### Command Query Separation
+### Command Query Separation
 
 Methods that return some result and do not change the state of the system, are called Query. Method averageGrades, that returns average of student grades is a good example.
 
@@ -442,10 +432,8 @@ It returns a value and is free of side effects. As we have seen in students grad
 
 There is also another category of methods called Command. This is when a method performs some actions, that changes the system state, but we don't expect any return value from it.
 
-```
-
+``` csharp
 void sendReminderEmail(Student student);
-
 ```
 
 A good practice is to divide an object's methods into those two separated categories.
@@ -464,7 +452,7 @@ After execution of securityOn method, window and door mocks recorded all interac
 You may ask how can we tell if door and window will be closed for real if we use mock? The answer is that we can't. But we don't care about it. This is not responsibility of SecurityCentral. This is responsibility of Door and Window alone to close itself when they get proper signal. We can test it independently in different unit test.
 
 
-### Mock
+## Mock
 
 Mocks are objects that register calls they receive.
 
@@ -482,9 +470,9 @@ Similar case is presented in the following example:
 Source: https://dev.to/milipski/test-doubles---fakes-mocks-and-stubs
 
 
-## Test levels
+# Test levels
 
-### Unit tests
+## Unit tests
 
 Unit tests are written to test a specific code part.
 
@@ -494,7 +482,7 @@ Unit tests should be written in a separate test project as part of the solution.
 
 CI/CD requires a source code repository like GIT. CI/CD takes the source code from the repository, builds the application and runs the tests automatically.
 
-### Integration tests
+## Integration tests
 
 Integration tests are intended to test more complex sceanios integrating external dependencies like databases, webservices etc..
 
@@ -502,13 +490,13 @@ The complexity of integration tests can be demanding to setup. But they help to 
 
 Integration tests should be written in a separate test project as part of the solution. The test run is done manually or in more advanced environments in a CI/CD chain.
 
-### Application level tests
+## Application level tests
 
 The app is installed in production like environment. Then automated tests written i.e. in Python communicate with app and check if the app is behaving as expected.
 
 
 
-### Manual testing
+## Manual testing
 
 The highest level of testing is the final manual testing. It is time consuming and very expensive compared to the lower testing levels..
 
@@ -516,24 +504,21 @@ It should follow a accuratley planned test plan to make the results reliable.
 
 The better the quality of the lower levels of testing the less time consuming and expensive the final manual testing will be. So it is a good idea to start with good unit testing and add integration testing if needed. Applicaton level tests is helpful but demanding and normally only for bigger environments to achieve.
 
-## Practical dev tools for automated testing
+# Practical dev tools for automated testing
 
-### Test settings
+## Test settings
 
-#### Making internal methods visiible for testing
+### Making internal methods visiible for testing
 
 Projects based on AssemblyInfo.cs (NOT recommended anymore)
 
-```
-
+``` csharp
 [assembly: InternalsVisibleTo("Bodoconsult.Web.Mvc.Test")]
-
 ```
 
 Projects based on csproj file
 
-```
-
+``` xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -549,12 +534,11 @@ Projects based on csproj file
 
 ```
 
-### Visual Studio snippets
+## Visual Studio snippets
 
-#### Snippet for AAA pattern
+### Snippet for AAA pattern
 
-```
-
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
@@ -583,13 +567,11 @@ Projects based on csproj file
 			</Snippet>
       </CodeSnippet>
 </CodeSnippets>
-
 ```
 
-#### Snippet for test method
+### Snippet for test method
 
-```
-
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
@@ -623,7 +605,6 @@ Projects based on csproj file
 			</Snippet>
       </CodeSnippet>
 </CodeSnippets>
-
 ```
 
 
@@ -638,148 +619,144 @@ Projects based on csproj file
 
 
 
-### Use Moq for mocking
+## Use Moq for mocking
 
-#### Mocking an class or interface
+### Mocking an class or interface
 
 The following code fragment shows a business logic to be tested:
 
+``` csharp
+
+  public interface IDoSomethingService
+  {
+  /// <summary>
+      /// Property changed by <see cref="DoSomething"/>
+      /// </summary>
+      bool Changed { get; set; }
+
+      /// <summary>
+      /// Do something and return a string
+      /// </summary>
+      /// <param name="a">String A</param>
+      /// <param name="b">String B</param>
+      /// <returns>String A concatenated with string B</returns>
+      string DoSomeThingWithReturnValue(string a, string b);
+
+
+
+      /// <summary>
+      /// Do something without return a value;
+      /// </summary>
+      void DoSomething();
+
+  }
+
+  public class DemoClass
+  {
+
+      private IDoSomethingService _service;
+
+      /// <summary>
+      /// Default ctor
+      /// </summary>
+      /// <param name="service">Injcted service dependecy</param>
+      public DemoClass(IDoSomethingService service)
+      {
+          _service = service;
+      }
+
+
+      /// <summary>
+      /// Create a smaple string
+      /// </summary>
+      /// <returns>Sample string</returns>
+      public string CreateString(string a, string b)
+      {
+
+          string result;
+
+          // Do other things here
+
+          result = _service.DoSomeThingWithReturnValue(a, b);
+
+          // Do other things here
+
+          return result;
+      }
+
+      /// <summary>
+      /// Run an action
+      /// </summary>
+      public void DoSomething()
+      {
+          _service.DoSomething();
+      }
+  }
 ```
 
-    public interface IDoSomethingService
-    {
-		/// <summary>
-        /// Property changed by <see cref="DoSomething"/>
-        /// </summary>
-        bool Changed { get; set; }
+### Testing a method with a return value
 
-        /// <summary>
-        /// Do something and return a string
-        /// </summary>
-        /// <param name="a">String A</param>
-        /// <param name="b">String B</param>
-        /// <returns>String A concatenated with string B</returns>
-        string DoSomeThingWithReturnValue(string a, string b);
+``` csharp
+[Test]
+public void DoSomeThingWithReturnValue_TwoString_ReturnsConcatenatedString()
+{
+    // Arrange
+    const string inputA = "This is an ";
+    const string inputB = "example";
+    const string expectedResult = "This is an example";
 
+    var mockService = new Mock<IDoSomethingService>();
+    mockService.Setup(x => x.DoSomeThingWithReturnValue(inputA, inputB)).Returns(expectedResult);
 
+    var demo = new DemoClass(mockService.Object);
 
-        /// <summary>
-        /// Do something without return a value;
-        /// </summary>
-        void DoSomething();
+    // Act
+    var result = demo.CreateString(inputA, inputB);
 
-    }
+    // Assert
+    // Assert returned value is as expected
+    Assert.That(result, Is.EqualTo(expectedResult));
 
-    public class DemoClass
-    {
-
-        private IDoSomethingService _service;
-
-        /// <summary>
-        /// Default ctor
-        /// </summary>
-        /// <param name="service">Injcted service dependecy</param>
-        public DemoClass(IDoSomethingService service)
-        {
-            _service = service;
-        }
-
-
-        /// <summary>
-        /// Create a smaple string
-        /// </summary>
-        /// <returns>Sample string</returns>
-        public string CreateString(string a, string b)
-        {
-
-            string result;
-
-            // Do other things here
-
-            result = _service.DoSomeThingWithReturnValue(a, b);
-
-            // Do other things here
-
-            return result;
-        }
-
-        /// <summary>
-        /// Run an action
-        /// </summary>
-        public void DoSomething()
-        {
-            _service.DoSomething();
-        }
-    }
-
-```
-
-#### Testing a method with a return value
-
-```
-
-        [Test]
-        public void DoSomeThingWithReturnValue_TwoString_ReturnsConcatenatedString()
-        {
-            // Arrange
-            const string inputA = "This is an ";
-            const string inputB = "example";
-            const string expectedResult = "This is an example";
-
-            var mockService = new Mock<IDoSomethingService>();
-            mockService.Setup(x => x.DoSomeThingWithReturnValue(inputA, inputB)).Returns(expectedResult);
-
-            var demo = new DemoClass(mockService.Object);
-
-            // Act
-            var result = demo.CreateString(inputA, inputB);
-
-            // Assert
-            // Assert returned value is as expected
-            Assert.That(result, Is.EqualTo(expectedResult));
-
-            // Assert method called only onces
-            mockService.Verify(m => m.DoSomeThingWithReturnValue(inputA, inputB), Times.Once());
-        }
+    // Assert method called only onces
+    mockService.Verify(m => m.DoSomeThingWithReturnValue(inputA, inputB), Times.Once());
+}
 
 ```
 
 
-#### Testing a method without return value with changing property values from mocked method
+### Testing a method without return value with changing property values from mocked method
 
 Setting up a test a method that changes a property value of the mocked object:     
 
 
+``` csharp
+[Test]
+public void DoSomethingWith_DefaultSetup_PropertyChanged()
+{
+    // Arrange
+    const bool expectedResult = true;
+
+    var mockService = new Mock<IDoSomethingService>();
+    mockService.Setup(x => x.Changed).Returns(false);
+    mockService.Setup(x => x.DoSomething())
+        .Callback(() => mockService.SetupGet(y => y.Changed).Returns(true));
+
+    var demo = new DemoClass(mockService.Object);
+
+    // Act
+    demo.DoSomething();
+
+    // Assert
+    // Assert property is changed as expected
+    Assert.That(mockService.Object.Changed, Is.EqualTo(expectedResult));
+
+    // Assert method called only onces
+    mockService.Verify(m => m.DoSomething(), Times.Once());
+
+}
 ```
 
-        [Test]
-        public void DoSomethingWith_DefaultSetup_PropertyChanged()
-        {
-            // Arrange
-            const bool expectedResult = true;
-
-            var mockService = new Mock<IDoSomethingService>();
-            mockService.Setup(x => x.Changed).Returns(false);
-            mockService.Setup(x => x.DoSomething())
-                .Callback(() => mockService.SetupGet(y => y.Changed).Returns(true));
-
-            var demo = new DemoClass(mockService.Object);
-
-            // Act
-            demo.DoSomething();
-
-            // Assert
-            // Assert property is changed as expected
-            Assert.That(mockService.Object.Changed, Is.EqualTo(expectedResult));
-
-            // Assert method called only onces
-            mockService.Verify(m => m.DoSomething(), Times.Once());
-
-        }
-
-```
-
-#### Additional info on Moq
+### Additional info on Moq
 
 https://www.codemag.com/Article/2305041/Using-Moq-A-Simple-Guide-to-Mocking-for-.NET
 

@@ -162,12 +162,10 @@ Plain text files are normally using ASCII, ANSI, UTF-8 encoding. Watch out for G
 Here a sample for comma separated CSV file
 
 ```
-
 Date,Amount,Remark
 20241129,100,09,InvNo R190100/24
 20240829,67,09,Car fuel
 20250429,100,09,InvNo R198999/24
-
 ```
 
 Some data types are subject to current language settings of the user persisting and / or restoring data. Dates or numbers with digits are typical examples.
@@ -175,7 +173,6 @@ Some data types are subject to current language settings of the user persisting 
 ## Sample implementation
 
 ``` csharp
-
 /// <summary>
 /// Class to serialize account statements into CSF files
 /// </summary>
@@ -311,13 +308,10 @@ public class AccountStatementTextSerializer
         return accountStatement;
     }
 }
-
-
 ```
 ## Tests for the sample implementation
 
 ``` csharp
-
 [TestFixture]
 public class PlainTextpersistanceTests
 {
@@ -477,10 +471,7 @@ public class PlainTextpersistanceTests
 
     }
 }
-
 ```
-
-
 
 # JSON (Java Script Object Notation)
 
@@ -514,13 +505,11 @@ JSON files are normally plain text files using UTF-8 encoding.
     }
     ]
 }
-
 ```
 
 ## Sample implementation
 
 ``` csharp
-
 using Newtonsoft.Json;
 
 namespace CodingBasics.persistance;
@@ -610,12 +599,10 @@ public static class JsonHelper
     }
 
 }
-
 ```
 ## Tests for the sample implementation
 
 ``` csharp
-
 [TestFixture]
 public class JsonpersistanceTests
 {
@@ -782,9 +769,7 @@ public class JsonpersistanceTests
 
     }
 }
-
 ```
-
 
 # XML (Extendable markup langage)
 
@@ -797,7 +782,6 @@ With a DTD or a XSD working like a contract the persisted data can be checked fo
 XML files are normally plain text files using UTF-8 encoding.
 
 ``` xml
-
 <?xml version="1.0" encoding="utf-16"?>
 <AccountStatement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <AccountStatementItems>
@@ -818,14 +802,12 @@ XML files are normally plain text files using UTF-8 encoding.
     </AccountStatementItem>
 </AccountStatementItems>
 </AccountStatement>
-
 ```
 
 
 ## Sample implementation
 
 ``` csharp
-
 /// <summary>
 /// Helper class for simple XML serialization
 /// </summary>
@@ -923,12 +905,11 @@ public static class XmlHelper
     }
 
 }
-
 ```
+
 ## Tests for the sample implementation
 
 ``` csharp
-
 [TestFixture]
 public class XmlpersistanceTests
 {
@@ -1097,5 +1078,4 @@ public class XmlpersistanceTests
 
     }
 }
-
 ```

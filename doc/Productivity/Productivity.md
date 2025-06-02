@@ -1,6 +1,7 @@
-# Developer productivity
+Developer productivity
+==============
 
-## Windows batch scripts
+# Windows batch scripts
 
 A batch script for windows is a plain text file with the exntsion bat.
 
@@ -10,14 +11,13 @@ https://steve-jansen.github.io/guides/windows-batch-scripting/part-2-variables.h
 
 
 
-## Code snippets for Visual Studio (VS)
+# Code snippets for Visual Studio (VS)
 
 Code snippets are are productivity tool for the developer allowing him to insert prefined textblocks with a hotkey.
 
-### Snippet example
+## Snippet example
 
-```
-
+``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
     <CodeSnippet Format="1.0.0">
@@ -51,16 +51,13 @@ Code snippets are are productivity tool for the developer allowing him to insert
 			</Snippet>
       </CodeSnippet>
 </CodeSnippets>
-
 ```
-
-
-###  Import a code snippet (Version 1)
+##  Import a code snippet (Version 1)
 
 Use copy.bat in R:\10_Entwicklung\01_SMDTower-DEV\03_StSys\Tools\Snippets to copy the snippets in this folder 
 to your local snippet folder. After the next restart of VS the snippets can be used.
 
-### Import a code snippet (Version 2)
+## Import a code snippet (Version 2)
 
 
 You can import a snippet to your Visual Studio installation by using the Code Snippets Manager. Open it by choosing Tools > Code Snippets Manager.
@@ -76,34 +73,32 @@ You can import a snippet to your Visual Studio installation by using the Code Sn
 Test your snippet by opening a C# or Visual Basic project. With a code file open in the editor, choose Snippets > Insert Snippet from the right-click menu, then My Code Snippets. You should see a snippet named Square Root. Double-click it.
 The snippet code is inserted in the code file.
 
-### Run snippets
+## Run snippets
 
 Write the name of the snippet then press TAB. The snippet code should be inserted.
 
 For a list of all snippets pres Ctrl+K, Ctrl+X
 
 
-## Windows hacks
+# Windows hacks
 
-### Restore the old, full Context Menu in Windows 11
+## Restore the old, full Context Menu in Windows 11
 
 Right-click the Start button and choose Windows Terminal.
 
 Copy the command from below, paste it into Windows Terminal Window, and press enter.
 
 ```
-
 reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
-
 ```
 
 Restart your computer for the changes to take effect.
 
 You would see the Legacy Right Click Context menu by default.
 
-## C# hacks
+# C# hacks
 
-### Solution wide AssemblyInfo.cs
+## Solution wide AssemblyInfo.cs
 
 Prefer to NOT use AssemblyInfo.cs in .NET 8 projects. Place the information in csproj file instead as recommend by Microsoft. This helps i.e. making Nuget package publishing easier.
 

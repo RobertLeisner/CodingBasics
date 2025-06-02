@@ -1,12 +1,13 @@
-# Nuget package management
+Nuget package management
+===============
 
-## Consuming nuget packages
+# Consuming nuget packages
 
 
 
-## Publishing nuget packages
+# Publishing nuget packages
 
-### Refreshing Nuget API key
+## Refreshing Nuget API key
 
 Tu publish a Nuget package you need an API key to access Nuget web host.
 
@@ -15,35 +16,28 @@ Login to your Nuget account
 Then call an command prompt and run (or create a batch file with that content):
 
 ```
-
-donet nuget setapikey your-api-key
-
+dotnet nuget setapikey your-api-key
 ```
 
-### Setting up a local nuget package store
+## Setting up a local nuget package store
 
 With the following command you can add a local (network) path (\\Server\Share\Folder) as your private Nuget package store
 
 ```
-
 dotnet nuget add source \\Server\Share\Folder --Name "Name_of_your_source"
-
 ```
 
 To publish a package into this store call:
 
 ```
-
 dotnet nuget push "your_package.nupkg" --source \\Server\Share\Folder
-
 ```
 
 ### Prepapring project file for packaging
 
 To prepare your csproj project file for Nuget packaging you have to add certain tags to this file. See an example csproj file for a working setup:
 
-```
-
+``` xml
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
@@ -90,12 +84,9 @@ To prepare your csproj project file for Nuget packaging you have to add certain 
 	</ItemGroup>
 
 </Project>
-
 ```
 
-
-
-### Publishing to Nuget website
+## Publishing to Nuget website
 
 Create a batch file in the solution folder to publish a package to Nuget website.
 
@@ -111,6 +102,6 @@ dotnet nuget push Bodoconsult.Typography.%version%.nupkg --source https://api.nu
 
 ```
 
-### Assembly and package versioning
+## Assembly and package versioning
 
 https://andrewlock.net/version-vs-versionsuffix-vs-packageversion-what-do-they-all-mean/

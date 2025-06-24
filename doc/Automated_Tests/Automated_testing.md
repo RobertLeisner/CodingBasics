@@ -200,81 +200,9 @@ public static class AssemblySetup
 
 Tests document code. But this only of practical use if the tests are well readable. So basically apply the same rules for good production code to your test code.
 
-Structure all test with AAA pattern: Arrange-Act-Assert. It is a good idea to create a code snippet for Visual Studio for this in C#. For general info on snippets see https://learn.microsoft.com/de-de/visualstudio/ide/walkthrough-creating-a-code-snippet?view=vs-2022. 
+Structure all test with AAA pattern: Arrange-Act-Assert. It is a good idea to create a code snippet for VS for this in C#. For general info on snippets see https://learn.microsoft.com/de-de/visualstudio/ide/walkthrough-creating-a-code-snippet?view=vs-2022. See [below for useful snippets for writing tests](#visual-studio-snippets).
 
 Test methods should at least have one Assert in the Assert section of the method.
-
-Here a snippet for the plain AAA pattern:
-
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
-    <CodeSnippet Format="1.0.0">
-		<Header>
-			<Title>xaaa</Title>
-			<Author>Robert Leisner</Author>
-			<Description>Insert the Arrange-Act-Assert pattern (AAA) in a test method</Description>
-			<Shortcut>x3a</Shortcut>
-			<SnippetTypes>
-				<SnippetType>Expansion</SnippetType>
-			</SnippetTypes>
-		</Header>
-		<Snippet>
-		  <Code Language="CSharp">
-				<![CDATA[// Arrange 
-				
-				
-				// Act  
-				
-				
-				// Assert
-				
-				]]>
-		  </Code>
-
-			</Snippet>
-      </CodeSnippet>
-</CodeSnippets>
-```
-
-And here a snippet for a full test method with AAA pattern:
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
-    <CodeSnippet Format="1.0.0">
-		<Header>
-			<Title>xtdd</Title>
-			<Author>Robert Leisner</Author>
-			<Description>Create a test method</Description>
-			<Shortcut>xtdd</Shortcut>
-			<SnippetTypes>
-				<SnippetType>Expansion</SnippetType>
-			</SnippetTypes>
-		</Header>
-		<Snippet>
-		  <Code Language="CSharp">
-				<![CDATA[[Test]
-        public void Test()
-        {
-            // Arrange 
-
-
-            // Act  
-
-
-            // Assert
-
-
-        }
-				]]>
-		  </Code>
-
-			</Snippet>
-      </CodeSnippet>
-</CodeSnippets>
-```
 
 ## Create test classes
 

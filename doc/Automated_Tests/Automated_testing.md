@@ -28,7 +28,6 @@ There are few reasons that can give you a basic understanding of why a developer
 -	Automatic documentation of the app as the unit tests show how the usage of the code is intended by developer
 
 
-
 Read more at - http://agiledata.org/essays/tdd.html
 
 # Basics on testing
@@ -48,13 +47,23 @@ Manual testing is most basic kind of testing a source code. Manual testing means
 
 -	Testing code with different real world situations is nearly impossible
 
+Try to use unit tests as much as possible instead of manual testing. Especially during debugging you should change as soon as possible to test writing instead of further debugging. As soon as you know what happens you should write a test giving the method to test the input you have seen during debugging. The first tests written this way may be painful but the code stability grows with each test and the expensive time demand for debugging is shrinking. So you get more productive. Manual testing / bug search with the debugger is the most expensive way of testing / bug fixing!!
+
 ## Unit testing and integration testing
 
 Unit tests are easy to write in C# if you employ a test framework like NUnit.
 
 If your tests requires infrastructure dependencies like databases we speak normally not of unit tests but of integration tests.
 
+Place unit tests in a separate test project.
+
+Unit tests are normally less demanding and much faster running. Therefore it is possible to run them more often in the CI process.
+
+As integration tests are more demanding to coding and the required test environment they should be the last option generally. Try to replace them with unit tests as far as possible.
+
 ## Characteristics of a good unit test
+
+Microsoft says a good test has basically the following characteristics:
 
 -	Fast: It isn't uncommon for mature projects to have thousands of unit tests. Unit tests should take little time to run. Milliseconds.
 
@@ -67,6 +76,88 @@ If your tests requires infrastructure dependencies like databases we speak norma
 -	Timely: A unit test shouldn't take a disproportionately long time to write compared to the code being tested. If you find testing the code taking a large amount of time compared to writing the code, consider a design that is more testable.
 
 Source: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices
+
+One test should have only one task to test. Try to avoid bundling tests in one test methods. This makes the interpretaton of a test result more clear. Try to use test cases instead of bundling in one method. 
+
+## Basics of writing a good test
+
+Tests document code. But this only of practical use if the tests are well readable. So basically apply the same rules for good production code to your test code.
+
+Structure all test with AAA pattern: Arrange-Act-Assert. It is a good idea to create a code snippet for Visual Studio for this in C#. For general info on snippets see https://learn.microsoft.com/de-de/visualstudio/ide/walkthrough-creating-a-code-snippet?view=vs-2022. 
+
+Test methods should at least have one Assert in the Assert section of the method.
+
+Here a snippet for the plain AAA pattern:
+
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>xaaa</Title>
+			<Author>Robert Leisner</Author>
+			<Description>Insert the Arrange-Act-Assert pattern (AAA) in a test method</Description>
+			<Shortcut>x3a</Shortcut>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+		  <Code Language="CSharp">
+				<![CDATA[// Arrange 
+				
+				
+				// Act  
+				
+				
+				// Assert
+				
+				]]>
+		  </Code>
+
+			</Snippet>
+      </CodeSnippet>
+</CodeSnippets>
+```
+
+And here a snippet for a full test method with AAA pattern:
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>xtdd</Title>
+			<Author>Robert Leisner</Author>
+			<Description>Create a test method</Description>
+			<Shortcut>xtdd</Shortcut>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+		  <Code Language="CSharp">
+				<![CDATA[[Test]
+        public void Test()
+        {
+            // Arrange 
+
+
+            // Act  
+
+
+            // Assert
+
+
+        }
+				]]>
+		  </Code>
+
+			</Snippet>
+      </CodeSnippet>
+</CodeSnippets>
+```
 
 ## Test driven development TDD
 

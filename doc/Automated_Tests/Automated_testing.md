@@ -79,86 +79,6 @@ Source: https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-
 
 One test should have only one task to test. Try to avoid bundling tests in one test methods. This makes the interpretaton of a test result more clear. Try to use test cases instead of bundling in one method. 
 
-## Basics of writing a good test
-
-Tests document code. But this only of practical use if the tests are well readable. So basically apply the same rules for good production code to your test code.
-
-Structure all test with AAA pattern: Arrange-Act-Assert. It is a good idea to create a code snippet for Visual Studio for this in C#. For general info on snippets see https://learn.microsoft.com/de-de/visualstudio/ide/walkthrough-creating-a-code-snippet?view=vs-2022. 
-
-Test methods should at least have one Assert in the Assert section of the method.
-
-Here a snippet for the plain AAA pattern:
-
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
-    <CodeSnippet Format="1.0.0">
-		<Header>
-			<Title>xaaa</Title>
-			<Author>Robert Leisner</Author>
-			<Description>Insert the Arrange-Act-Assert pattern (AAA) in a test method</Description>
-			<Shortcut>x3a</Shortcut>
-			<SnippetTypes>
-				<SnippetType>Expansion</SnippetType>
-			</SnippetTypes>
-		</Header>
-		<Snippet>
-		  <Code Language="CSharp">
-				<![CDATA[// Arrange 
-				
-				
-				// Act  
-				
-				
-				// Assert
-				
-				]]>
-		  </Code>
-
-			</Snippet>
-      </CodeSnippet>
-</CodeSnippets>
-```
-
-And here a snippet for a full test method with AAA pattern:
-
-``` xml
-<?xml version="1.0" encoding="utf-8"?>
-<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
-    <CodeSnippet Format="1.0.0">
-		<Header>
-			<Title>xtdd</Title>
-			<Author>Robert Leisner</Author>
-			<Description>Create a test method</Description>
-			<Shortcut>xtdd</Shortcut>
-			<SnippetTypes>
-				<SnippetType>Expansion</SnippetType>
-			</SnippetTypes>
-		</Header>
-		<Snippet>
-		  <Code Language="CSharp">
-				<![CDATA[[Test]
-        public void Test()
-        {
-            // Arrange 
-
-
-            // Act  
-
-
-            // Assert
-
-
-        }
-				]]>
-		  </Code>
-
-			</Snippet>
-      </CodeSnippet>
-</CodeSnippets>
-```
-
 ## Test driven development TDD
 
 Unit testing refers to what you are testing, TDD to when you are testing.
@@ -242,7 +162,7 @@ See a sample for the AAA pattern in a test method:
 
 ### Add required test projects
 
-As a rule of thumb there should be one unit test project per productive project in a solution. A solution built with three layers (data, business and UI) should have three test projects: one unit test project per level.
+As a rule of thumb there should be one unit test project per solution. If integration tests are required they should be separated from unit test in a integration test project. So a solution will end up with at least one or maximum two test projects included.
 
 If your tests requires infrastructure dependencies like databases we speak normally not of unit tests but of integration tests. Integration tests should be separated from unit tests as they are normally more complex and running it automatically might much slower then unit tests. If you employ a CI / CD environment to automated testing, building and deploying software it may be helpful to tasks with other schedules for unit tests and integration tests. Think as a simple example for running unit tests on a daily base and integration tests only once on weekends.
 
@@ -276,7 +196,85 @@ public static class AssemblySetup
 	
 }
 ```
+## Basics of writing a good test
 
+Tests document code. But this only of practical use if the tests are well readable. So basically apply the same rules for good production code to your test code.
+
+Structure all test with AAA pattern: Arrange-Act-Assert. It is a good idea to create a code snippet for Visual Studio for this in C#. For general info on snippets see https://learn.microsoft.com/de-de/visualstudio/ide/walkthrough-creating-a-code-snippet?view=vs-2022. 
+
+Test methods should at least have one Assert in the Assert section of the method.
+
+Here a snippet for the plain AAA pattern:
+
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>xaaa</Title>
+			<Author>Robert Leisner</Author>
+			<Description>Insert the Arrange-Act-Assert pattern (AAA) in a test method</Description>
+			<Shortcut>x3a</Shortcut>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+		  <Code Language="CSharp">
+				<![CDATA[// Arrange 
+				
+				
+				// Act  
+				
+				
+				// Assert
+				
+				]]>
+		  </Code>
+
+			</Snippet>
+      </CodeSnippet>
+</CodeSnippets>
+```
+
+And here a snippet for a full test method with AAA pattern:
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>xtdd</Title>
+			<Author>Robert Leisner</Author>
+			<Description>Create a test method</Description>
+			<Shortcut>xtdd</Shortcut>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+		  <Code Language="CSharp">
+				<![CDATA[[Test]
+        public void Test()
+        {
+            // Arrange 
+
+
+            // Act  
+
+
+            // Assert
+
+
+        }
+				]]>
+		  </Code>
+
+			</Snippet>
+      </CodeSnippet>
+</CodeSnippets>
+```
 
 ## Create test classes
 

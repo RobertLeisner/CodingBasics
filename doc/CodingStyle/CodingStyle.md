@@ -34,14 +34,13 @@ Microsoft CoreFX recommendations for C# coding style conventions: https://github
 
 Bad
 
-```
+``` csharp
 	if (isNotAllowed) return;
-
 ```
 
 Good
 
-```
+``` csharp
 	if (isNotAllowed) 
 	{
 		return;
@@ -54,13 +53,17 @@ Good
 
 -	Add a comment to a block of code lines to make code better understandable
 
+## Code writing basics
 
+-	Only one class, interface, enum etc per file
+
+-	Use indentation and blank lines to make code strcuture more visible
+
+-	Ensure good readability of your code 
 
 ## Documentation
 
 -	Use the \\\ shortcut in Visual Studio to document methods and properties: before the first line of a method write \\\ and Visual Studio creates a comment block for you. Fill all requested information
-
--	If injecting dependencies leads to circle references in DI container use for each dependency causing a circle reference method injection with a separate method for each of these dependencies.
 
 -	All public methods and properties have to be documented
 
@@ -71,7 +74,9 @@ Good
 
 ## Class design
 
--	Inject all dependencies of a class via ctor
+-	Try to inject all dependencies a class requires via ctor
+
+-	If injecting dependencies leads to circle references in DI container use for each dependency causing a circle reference method injection with a separate method for each of these dependencies.
 
 -	Do NOT create dependencies in the ctor or allocate them with service allocator style calls
 
@@ -79,10 +84,32 @@ Good
 
 -	If you need such a dependency included in an interface use a get-only property instead of readonly field
 
-
 ## Unit tests
 
--	Use test driven design (TDD): develop a test first, let it fail and then the code to make it work
+-	Use test driven design (TDD): develop a test first, let it fail and then make the code (and the test) work
+
+-	Use Arrange-Act-Assert pattern (AAA) for better understandability and documentation in test methods
+
+``` csharp
+[Test]
+public void MethodToTest_Scenario_Result()
+{
+	// Arrange 
+
+
+	// Act  
+
+
+	// Assert
+
+}
+```
+
+-	Separate unit tests and integration test in separate test projects
+
+-	The test class should be named XXXTests with XXX being the class to test
+
+-	Test methods should be named following the MethodToTest_Scenario_Result schema (i.e. Execute_ValidSql_DataDeleted)
 
 
 ## Rules for special implementations
@@ -91,18 +118,18 @@ Good
 
 The main method of a XXX factory should be named CreateInstance, return a XXX instance and have only specific parameters needed to build the concrete instance of XXX. 
 
-General dependencies should be injected via ctor of XXX factory class. The XXX instance create by the factory can get them injected via its ctor in the CreateInstance method.
+General dependencies should be injected via ctor of XXX factory class. The XXX instance created by the factory can get them injected via its ctor in the CreateInstance method.
 
 
 ## Naming conventions
 
-XXXDto  For DTO (data transfer objects)
+**XXXDto**  For DTO (data transfer objects)
 
-XXXManager	Business logic layer for XXX. Other postfixes like Provider, Logger etc may be helpful for subordinated business logic classes
+**XXXManager**	Business logic layer for XXX. Other postfixes like Provider, Logger etc may be helpful for subordinated business logic classes
 
-XXXService Database and database technology specific services for XXX, i.e. SqlServer specific implementation
+**XXXService** Database and database technology specific services for XXX, i.e. SqlServer specific implementation
 
-XXXFactory	Factory for XXX instances
+**XXXFactory**	Factory for XXX instances
 
-XXXFactoryFactory Factory for XXX factories
+**XXXFactoryFactory** Factory for XXX factories
 

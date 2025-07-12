@@ -67,9 +67,9 @@ public static class JsonHelper
     /// <summary>
     /// Deserialize an object from a JSON file
     /// </summary>
-    /// <typeparam name="T">Type of of the object the serializer should return</typeparam>
+    /// <typeparam name="T">Type of the object the serializer should return</typeparam>
     /// <param name="fileName">Full file path to the JSON file</param>
-    /// <returns>Type of of the object the serializer should return</returns>
+    /// <returns>Type of the object the serializer should return</returns>
     /// <exception cref="FileNotFoundException">File is not existing</exception>
     public static T DeserializeFromFile<T>(string fileName)
     {

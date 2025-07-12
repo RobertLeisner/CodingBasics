@@ -1,12 +1,25 @@
-﻿using System.Diagnostics;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
 
-namespace CodingBasics.DependencyHandling.C05_InversionOfControl_DependencyInjection_with_Interfaces_Overriding;
+using System.Diagnostics;
+using System.Dynamic;
+
+namespace CodingBasics.DependencyHandling.C05_DiContainer;
 
 /// <summary>
 /// Brand A Model X car
 /// </summary>
 public class CarBrandAModelX : CarBrandA
 {
+
+    /// <summary>
+    /// Static factory method for <see cref="CarBrandAModelX"/>
+    /// </summary>
+    /// <param name="engine"></param>
+    /// <returns></returns>
+    public static CarBrandAModelX CreateInstance(IEngine engine)
+    {
+        return new CarBrandAModelX(engine);
+    }
 
     /// <summary>
     /// Default ctor

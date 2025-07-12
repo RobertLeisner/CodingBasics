@@ -4,10 +4,10 @@ using System.Diagnostics;
 using CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection;
 using CodingBasics.Tests.Helpers;
 
-namespace CodingBasics.Tests.DependencyHandling.Encapsulated;
+namespace CodingBasics.Tests.DependencyHandling;
 
 [TestFixture]
-public class LooselyCoupledWithInterfacesTests
+public class C03LooselyCoupledWithInterfacesTests
 {
     //[SetUp]
     //public void Setup()

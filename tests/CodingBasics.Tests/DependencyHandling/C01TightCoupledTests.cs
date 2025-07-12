@@ -4,9 +4,9 @@ using System.Diagnostics;
 using CodingBasics.DependencyHandling.C01_TightCoupled;
 using CodingBasics.Tests.Helpers;
 
-namespace CodingBasics.Tests.DependencyHandling.Encapsulated;
+namespace CodingBasics.Tests.DependencyHandling;
 
-public class TightCoupledTests
+public class C01TightCoupledTests
 {
 
     private bool _wasEventFired;

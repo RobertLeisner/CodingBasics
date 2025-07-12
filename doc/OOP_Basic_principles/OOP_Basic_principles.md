@@ -1,12 +1,12 @@
 Object-oriented-programming (OOP) with C#
 ================
 
-# Object-oriented-programming versus functional programming
+# functional programming versus object oriented programming
 
 ## Functional programming
 
 The first programming languages were functional languages. All code is organized in methods which can be controlled with input parameters. 
-This coding style is limited as complexer development tasks lead to methods calls with endless parameter list. This makes the code less readable and difficult to test.
+This coding style is limited as complexer development tasks lead to methods calls with endless parameter lists. This makes the code less readable and difficult to test.
 
 One weekness of functional programming is that keeping a data state is difficult to implement.
 
@@ -34,9 +34,9 @@ public void DoSomething
 }
 ```
 
-Functional programming is very performant i.e. in mathematical context. Implement processes in business context is painful.
+Functional programming is very performant i.e. in mathematical contexts. Implementing more or less complex processes in business contexts is painful.
 
-## Object-oriented-programming
+## Object oriented programming
 
 OOP means a programming style where all code is organzied in objects with properties, methods and events. 
 
@@ -46,7 +46,7 @@ This leads to hierachies of object types. Imagine a object car which may have su
 
 If an objects is dependent of other objects we speak of dependecies the object requires.
 
-Properties are used to the describe properties as color, state or name of an object.
+Properties are used to the describe properties of the object as color, state or name of an object.
 
 Methods are giving activity to an object. A car object will have a StartEngine method i.e..
 
@@ -198,8 +198,7 @@ implement an interface that exposes a setter method that accepts the dependency.
 
 Service locator style of injection may be called a type of dependency injection too but its usage isn't recommend (see below).
 
-### Constructor injection
-
+#### Constructor injection
 
 The dependencies of a class are injected via the constructor of a class. This is the preferred way on dependency injection.
 
@@ -218,16 +217,61 @@ engine = new FakeEngine()
 var carWithFakeEngine = new Car(engine)
 ```
 
-### Service locator style of injection
+#### Service locator style of injection
 
-Via a central dependency manager a required dependency is resolved from inside the class:
+Via a dependency injection container class a required dependency is resolved from inside the class:
 
 ``` csharp
-var instance = DependencyManager.GetInstance<ICar>()
+var instance = DiContainer.Get<ICar>()
 ```
 
 This type of dependency injection works but is not very transparent from outside the class. Therefore it should by avoided and replaced by constructor injection.
 
+### DI container
+
+The purpose of a dependency injection container class like DiContainer is to resolve the dependencies injected by constructur when a class is instanciated.
+
+``` csharp
+/// <summary>
+/// Configure the DI container
+/// </summary>
+/// <returns>Configured DI container</returns>
+public DiContainer ContainerSetup()
+{
+    var diContainer = new DiContainer();
+
+    diContainer.AddSingleton<IEngineFactory, EngineFactory>();
+    diContainer.AddSingleton<ICarFactory, CarFactory>();
+
+    diContainer.BuildServiceProvider();
+
+    return diContainer;
+}
+
+[Test]
+public void CarBrandAModelX_StartEngine_EventEngineStartedFired()
+{
+    // Arrange 
+    var diContainer = ContainerSetup();
+    _wasEventFired = false;
+
+    // Create the instance of the target class now with injected dependency
+    var factory = diContainer.Get<ICarFactory>();
+
+    var car = factory.CreateInstance(typeof(CarBrandAModelX));
+
+    // Register the even CarOnEngineStartedEvent
+    car.EngineStartedEvent += CarOnEngineStartedEvent;
+
+    // Act
+    car.StartEngine();
+
+    // Assert
+    Wait.Until(() => _wasEventFired);
+
+    Assert.That(_wasEventFired, Is.True);
+}
+```
 
 # Inheritance
 

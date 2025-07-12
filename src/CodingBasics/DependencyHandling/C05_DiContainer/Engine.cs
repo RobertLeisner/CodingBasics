@@ -1,4 +1,7 @@
-﻿namespace CodingBasics.DependencyHandling.C05_InversionOfControl_DependencyInjection_with_Interfaces_Overriding;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+
+namespace CodingBasics.DependencyHandling.C05_DiContainer;
 
 /// <summary>
 /// Class representing the engine of the car

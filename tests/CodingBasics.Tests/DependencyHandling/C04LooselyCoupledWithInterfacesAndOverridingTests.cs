@@ -1,13 +1,13 @@
 // Copyright (c) Bodoconsult EDV-Dienstleistungen. All rights reserved.
 
 using System.Diagnostics;
-using CodingBasics.DependencyHandling.C05_InversionOfControl_DependencyInjection_with_Interfaces_Overriding;
+using CodingBasics.DependencyHandling.C04_InversionOfControl_DependencyInjection_with_Interfaces_Overriding;
 using CodingBasics.Tests.Helpers;
 
-namespace CodingBasics.Tests.DependencyHandling.Encapsulated;
+namespace CodingBasics.Tests.DependencyHandling;
 
 [TestFixture]
-public class LooselyCoupledWithInterfacesAndOverridingTests
+public class C04LooselyCoupledWithInterfacesAndOverridingTests
 {
     //[SetUp]
     //public void Setup()

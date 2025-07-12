@@ -28,9 +28,7 @@ public class GlobalValues
     /// A private ctor prohibits direct instancing of the class
     /// </summary>
     private GlobalValues()
-    {
-        
-    }
+    { }
 
     /// <summary>
     /// Application name

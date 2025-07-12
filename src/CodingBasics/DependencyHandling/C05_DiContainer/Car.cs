@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen. All rights reserved.
 
-namespace CodingBasics.DependencyHandling.C05_InversionOfControl_DependencyInjection_with_Interfaces_Overriding
+namespace CodingBasics.DependencyHandling.C05_DiContainer
 {
     /// <summary>
     /// Class represents a car

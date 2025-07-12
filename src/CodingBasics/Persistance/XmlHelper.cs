@@ -78,9 +78,9 @@ public static class XmlHelper
     /// <summary>
     /// Deserialize an object from a XML file
     /// </summary>
-    /// <typeparam name="T">Type of of the object the serializer should return</typeparam>
+    /// <typeparam name="T">Type of the object the serializer should return</typeparam>
     /// <param name="fileName">Full file path to the XML file</param>
-    /// <returns>Type of of the object the serializer should return</returns>
+    /// <returns>Type of the object the serializer should return</returns>
     /// <exception cref="FileNotFoundException">File is not existing</exception>
     public static T DeserializeFromFile<T>(string fileName)
     {

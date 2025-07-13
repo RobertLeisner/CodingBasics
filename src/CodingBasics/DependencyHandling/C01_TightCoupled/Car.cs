@@ -17,9 +17,7 @@ public class Car
     {
         // Instanciated the engine here:tight coupled because _engine is not changeable
         _engine = new Engine();
-
     }
-
 
     /// <summary>
     /// Event fired when engine is started
@@ -30,7 +28,6 @@ public class Car
     /// <summary>
     /// Name of the car type
     /// </summary>
-
     public string TypeName { get; set; }
 
     /// <summary>

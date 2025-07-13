@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
 
 using System.Diagnostics;
-using System.Dynamic;
 
 namespace CodingBasics.DependencyHandling.C05_DiContainer;
 

@@ -1,4 +1,6 @@
-﻿namespace CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+namespace CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection;
 
 /// <summary>
 /// Class representing the engine of the car

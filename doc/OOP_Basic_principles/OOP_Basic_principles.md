@@ -46,17 +46,87 @@ This leads to hierachies of object types. Imagine a object car which may have su
 
 If an objects is dependent of other objects we speak of dependecies the object requires.
 
-Properties are used to the describe properties of the object as color, state or name of an object.
+OOP requires writing classes with properties, methods and events and bringing this classes to life by instanciating it. An instance is a concrete object with defined functionality by its underlying class.
 
-Methods are giving activity to an object. A car object will have a StartEngine method i.e..
+### Properties
 
-Events add the possiblity to react on certain situations a object is in. Imagine an event "EngineStarted" for a car object.
+Properties are used to the describe properties of the object as color, state or name of an object. Properties may be read-write, read-only or write-only.
+
+In the source code of the repo you will find a class ImmutableStringList in the namespace CodingBasics.OopBasics implementing an immutable list of strings: you can add string to this list but not remove strings or change the sort of the strings.
+
+The following code defines a read-write property for the name of the instance of the ImmutableStringList class:
+
+``` csharp
+/// <summary>
+/// Name property (read-write)
+/// </summary>
+public string Name { get; set; }
+```
+
+The following code defines a read-write property giving access to an internal field _allItems with no possibiblity to change data in it:
+
+``` csharp
+/// <summary>
+/// Internal field holding a list with string not allowed to be changed from outside
+/// </summary>
+private readonly List<string> _allItems = new();
+
+/// <summary>
+/// Read-only property to access a copx of the list with all string items 
+/// </summary>
+public List<string> AllItems => _allItems.ToList();
+
+/// <summary>
+/// Read-only property to get the current number of items in the list of all string items
+/// </summary>
+public int Count => _allItems.Count;
+```
+
+An alternative implementation for the read-only Count property using a statement body is:
+
+``` csharp
+/// <summary>
+/// Read-only property to get the current number of items in the list of all string items
+/// </summary>
+public int Count
+{
+    get { return _allItems.Count; }
+}
+```
+
+### Methods
+
+Methods are giving activity to an object. The ImmutableStringList class provides a method AddString for example:
+
+``` csharp
+/// <summary>
+/// Add a string to the immutable list
+/// </summary>
+/// <param name="value">String to add</param>
+public void AddString(string value)
+{
+    _allItems.Add(value);
+}
+```
+
+
+``` csharp
+
+```
+
+
+``` csharp
+
+```
+
+### Events
+
+Events add the possiblity to react on certain situations an object is in. Imagine an event "EngineStarted" for a car object. See Car class in namespace CodingBasics.DependencyHandling.C01_TightCoupled.
 
 
 ``` csharp
 public void DoSomething()
 {
-
 	var car = new Car();
 	
 	car.Color = Colors.red;
@@ -65,7 +135,6 @@ public void DoSomething()
 	
 	
 	car.StartEngine();
-
 }
 
 public void OnEngineStarted(EventArgs args)
@@ -74,24 +143,48 @@ public void OnEngineStarted(EventArgs args)
 }
 ```
 
+Here the relevante implementation details for the car class:
+
+``` csharp
+/// <summary>
+/// Class represents a car
+/// </summary>
+public class Car
+{
+    ...
+
+    /// <summary>
+    /// Event fired when engine is started
+    /// </summary>
+
+    public event EngineStartedHandler EngineStartedEvent;
+
+    ...
+
+    /// <summary>
+    /// Start the engine of the car
+    /// </summary>
+    public void StartEngine()
+    {
+        // Start engine here
+        _engine.StartEngine();
+
+        // Engine started: fire event
+        var args = new EngineStartedEventHandlerArgs
+        {
+            Message = $"Engine of car model {ManufacturerName} {TypeName} started.."
+        };
+
+        EngineStartedEvent?.Invoke(this, args);
+
+    }
+
+    ...
+}
+```
+
+
 # Basic principles of object-oriented programming
-
-## S.O.L.I.D: the five basic principles of object-oriented programming and design
-
-The SOLID concepts are:
-
--	The Single-responsibility principle: "There should never be more than one reason for a class to change.". In other words, every class should have only one responsibility.
-
--	The Open-closed principle: "Software entities ... should be open for extension, but closed for modification."
-
--	The Liskov substitution principle: "Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it". See also design by contract.
-
--	The Interface segregation principle: "Many client-specific interfaces are better than one general-purpose interface."
-
--	The Dependency inversion principle: "Depend upon abstractions, not concretions." 
-
-
-Source: https://en.wikipedia.org/wiki/SOLID
 
 ### S.O.L.I.D: the five basic principles of object-oriented programming and design
 
@@ -111,7 +204,7 @@ The SOLID concepts are:
 Source: https://en.wikipedia.org/wiki/SOLID
 
 
-### Inversion of control (IoC) - the concept behind DI
+### Inversion of control (IoC) - the concept behind dependency injection
 
 This states that a class should not configure its dependencies statically but should be configured by some other class from outside.
 
@@ -376,7 +469,6 @@ public void Car_StartEngine_WriteTextinDebugWindow()
     // Assert
     Assert.That(car, Is.Not.Null);
     // Writes: Engine of car model BarndXY Model xy starts...
-
 }
 
 [Test]
@@ -392,10 +484,141 @@ public void CarBrandA_StartEngine_WriteTextinDebugWindow()
     // Assert
     Assert.That(car, Is.Not.Null);
     // Writes: Engine of car model BrandACompany Model xy starts...
-
 }
 
+[Test]
+public void CarBrandAModelX_StartEngine_WriteTextinDebugWindow()
+{
+    // Arrange 
+    var car = new CarBrandAModelX();
 
+    // Act  
+    car.StartEngine();
+
+    // Assert
+    Assert.That(car, Is.Not.Null);
+    // Writes: Engine of car model BrandACompany Model X starts...
+}
+
+[Test]
+public void CarBrandAModelY_StartEngine_WriteTextinDebugWindow()
+{
+    // Arrange 
+    var car = new CarBrandAModelY();
+
+    // Act  
+    car.StartEngine();
+
+    // Assert
+    Assert.That(car, Is.Not.Null);
+    // Writes:Engine of car model BrandACompany Model Y starts...
+}
+```
+
+Simple inheritance makes it possible to inherite properties, methods and events from a base class (here Car class). 
+The weakness of simple inheritance is that you cannot change the behaviour of the base class implementation of i.e. a method (here StartEngine).
+To add additional functionality to a class (subclass) inheriting from another class is possible.
+
+## Inheritance with overriding
+
+Overriding means you implement a property, a method or an event in a subclass in another manner then in the base class. Devs speak of "overriding a method/property/event"
+
+Class intended as base class will be marked "abtract" in the most cases as they normally do NOT represent a fully featured existing class.
+
+Methods intended to be overriden have to marked as "virtual".
+
+
+``` csharp
+/// <summary>
+/// Base class car
+/// </summary>
+public abstract class Car
+{
+    /// <summary>
+    /// Name of the car type
+    /// </summary>
+    public string TypeName { get; set; }
+
+    /// <summary>
+    /// Manufacturer name
+    /// </summary>
+    public string ManufacturerName { get; set; }
+
+    /// <summary>
+    /// Start the engine of the car
+    /// </summary>
+    public virtual void StartEngine()
+    {
+        throw new NotSupportedException();
+    }
+}
+
+/// <summary>
+/// Base class car brand A
+/// </summary>
+public abstract class CarBrandA : Car
+{
+    /// <summary>
+    /// Default ctor
+    /// </summary>
+    public CarBrandA()
+    {
+        ManufacturerName = "BrandACompany";
+    }
+}
+
+/// <summary>
+/// Brand A Model X car
+/// </summary>
+public class CarBrandAModelX : CarBrandA
+{
+    /// <summary>
+    /// Default ctor
+    /// </summary>
+    public CarBrandAModelX()
+    {
+        TypeName = "Model X";
+    }
+
+    /// <summary>
+    /// Start the engine of the car the way model X needs it
+    /// </summary>
+    public override void StartEngine()
+    {
+        // Start engine here
+        Debug.Print($"Engine of car model {ManufacturerName} {TypeName} starts...");
+        // Writes: 
+    }
+}
+
+/// <summary>
+/// Brand A Model X car
+/// </summary>
+public class CarBrandAModelY : CarBrandA
+{
+    /// <summary>
+    /// Default ctor
+    /// </summary>
+    public CarBrandAModelY()
+    {
+        TypeName = "Model Y";
+    }
+
+    /// <summary>
+    /// Start the engine of the car the way model Y needs it
+    /// </summary>
+    public override void StartEngine()
+    {
+        // Start engine here
+        Debug.Print($"Engine of car model {ManufacturerName} {TypeName} starts...");
+        // Writes: 
+    }
+}
+```
+
+See the following tests what inheritance with overriding is doing for you:
+
+```
 [Test]
 public void CarBrandAModelX_StartEngine_WriteTextinDebugWindow()
 {
@@ -422,153 +645,9 @@ public void CarBrandAModelY_StartEngine_WriteTextinDebugWindow()
 
     // Assert
     Assert.That(car, Is.Not.Null);
-    // Writes:Engine of car model BrandACompany Model Y starts...
+    // Writes: Engine of car model BrandACompany Model Y starts...
 
 }
-```
-
-Simple inheritance makes it possible to inherite properties, methods and events from a base class (here Car class). 
-The weakness of simple inheritance is that you cannot change the behaviour of the base class implementation of i.e. a method (here StartEngine).
-To add additional functionality to a class (subclass) inheriting from another class is possible.
-
-## Inheritance with overriding
-
-Overriding means you implement a property, a method or an event in a subclass in another manner then in the base class. Devs speak of "overriding a method/property/event"
-
-Class intended as base class wil be marked "abtract" in the most cases as they normally do NOT represent a fully featured existing class.
-
-Methods intended to be overriden have to marked as "virtual".
-
-
-``` csharp
-    /// <summary>
-    /// Base class car
-    /// </summary>
-    public abstract class Car
-    {
-        /// <summary>
-        /// Name of the car type
-        /// </summary>
-
-        public string TypeName { get; set; }
-
-        /// <summary>
-        /// Manufacturer name
-        /// </summary>
-        public string ManufacturerName { get; set; }
-
-        /// <summary>
-        /// Start the engine of the car
-        /// </summary>
-        public virtual void StartEngine()
-        {
-            throw new NotSupportedException();
-        }
-
-
-    }
-
-    /// <summary>
-    /// Base class car brand A
-    /// </summary>
-    public abstract class CarBrandA : Car
-    {
-
-        /// <summary>
-        /// Default ctor
-        /// </summary>
-        public CarBrandA()
-        {
-            ManufacturerName = "BrandACompany";
-        }
-
-
-    }
-
-    /// <summary>
-    /// Brand A Model X car
-    /// </summary>
-    public class CarBrandAModelX : CarBrandA
-    {
-
-        /// <summary>
-        /// Default ctor
-        /// </summary>
-        public CarBrandAModelX()
-        {
-            TypeName = "Model X";
-        }
-
-        /// <summary>
-        /// Start the engine of the car the way model X needs it
-        /// </summary>
-        public override void StartEngine()
-        {
-            // Start engine here
-            Debug.Print($"Engine of car model {ManufacturerName} {TypeName} starts...");
-            // Writes: 
-        }
-
-    }
-
-    /// <summary>
-    /// Brand A Model X car
-    /// </summary>
-    public class CarBrandAModelY : CarBrandA
-    {
-        /// <summary>
-        /// Default ctor
-        /// </summary>
-        public CarBrandAModelY()
-        {
-            TypeName = "Model Y";
-        }
-
-        /// <summary>
-        /// Start the engine of the car the way model Y needs it
-        /// </summary>
-        public override void StartEngine()
-        {
-            // Start engine here
-            Debug.Print($"Engine of car model {ManufacturerName} {TypeName} starts...");
-            // Writes: 
-        }
-
-    }
-```
-
-See the following tests what inheritance with overriding is doing for you:
-
-```
- [Test]
- public void CarBrandAModelX_StartEngine_WriteTextinDebugWindow()
- {
-     // Arrange 
-     var car = new CarBrandAModelX();
-
-     // Act  
-     car.StartEngine();
-
-     // Assert
-     Assert.That(car, Is.Not.Null);
-     // Writes: Engine of car model BrandACompany Model X starts...
-
- }
-
- [Test]
- public void CarBrandAModelY_StartEngine_WriteTextinDebugWindow()
- {
-     // Arrange 
-     var car = new CarBrandAModelY();
-
-     // Act  
-     car.StartEngine();
-
-     // Assert
-     Assert.That(car, Is.Not.Null);
-     // Writes: Engine of car model BrandACompany Model Y starts...
-
- }
 ```
 
 
@@ -579,32 +658,30 @@ Interfaces are contracts to describe which properties, methods and events a cert
 Using interfaces instead of concrete object classes makes code more flexible. 
 
 ``` csharp
+/// <summary>
+/// Interface for cr engine implementations
+/// </summary>
+public interface IEngine
+{
     /// <summary>
-    /// Interface for cr engine implementations
+    /// Start the engine of the car
     /// </summary>
-    public interface IEngine
-    {
-        /// <summary>
-        /// Start the engine of the car
-        /// </summary>
-        void StartEngine();
-    }
+    void StartEngine();
+}
 
+/// <summary>
+/// Class representing the engine of the car
+/// </summary>
+public class Engine : IEngine
+{
     /// <summary>
-    /// Class representing the engine of the car
+    /// Start the engine of the car
     /// </summary>
-    public class Engine : IEngine
+    public void StartEngine()
     {
-
-        /// <summary>
-        /// Start the engine of the car
-        /// </summary>
-        public void StartEngine()
-        {
-            // Start the engine here
-        }
-
+        // Start the engine here
     }
+}
 ```
 
 
@@ -653,20 +730,17 @@ The tight coupled approach is the approach you see often in beginner projects la
             // Instanciated the engine here: tight coupled because _engine is not changeable
 			// *********************************
             _engine = new Engine();
-
         }
 
 
         /// <summary>
         /// Event fired when engine is started
         /// </summary>
-
         public event EngineStartedHandler EngineStartedEvent;
 
         /// <summary>
         /// Name of the car type
         /// </summary>
-
         public string TypeName { get; set; }
 
         /// <summary>
@@ -689,7 +763,6 @@ The tight coupled approach is the approach you see often in beginner projects la
             };
 
             EngineStartedEvent?.Invoke(this, args);
-
         }
     }
 
@@ -700,7 +773,6 @@ The tight coupled approach is the approach you see often in beginner projects la
     /// </summary>
     public class Engine
     {
-
         /// <summary>
         /// Start the engine of the car
         /// </summary>
@@ -708,7 +780,6 @@ The tight coupled approach is the approach you see often in beginner projects la
         {
             // Start the engine here
         }
-
     }
 
     /// <summary>
@@ -720,7 +791,6 @@ The tight coupled approach is the approach you see often in beginner projects la
         /// A message transported with the event args
         /// </summary>
         public string Message { get; set; }
-
     }
 ```
 
@@ -769,13 +839,11 @@ Using IoC enhances flexibility and testability of the code.
 It improves the readability of the code and makes it easier to understand what the code is doing and what dependencies are required.
 
 ``` csharp
-
     /// <summary>
     /// Class represents a car
     /// </summary>
     public class Car
     {
-
         private readonly Engine _engine;
 
         /// <summary>
@@ -785,20 +853,16 @@ It improves the readability of the code and makes it easier to understand what t
         {
             // Instanciated the engine here:tight coupled because _engine is not changeable
             _engine = new Engine();
-
         }
-
 
         /// <summary>
         /// Event fired when engine is started
         /// </summary>
-
         public event EngineStartedHandler EngineStartedEvent;
 
         /// <summary>
         /// Name of the car type
         /// </summary>
-
         public string TypeName { get; set; }
 
         /// <summary>
@@ -821,7 +885,6 @@ It improves the readability of the code and makes it easier to understand what t
             };
 
             EngineStartedEvent?.Invoke(this, args);
-
         }
     }
 
@@ -832,7 +895,6 @@ It improves the readability of the code and makes it easier to understand what t
     /// </summary>
     public class Engine
     {
-
         /// <summary>
         /// Start the engine of the car
         /// </summary>
@@ -840,7 +902,6 @@ It improves the readability of the code and makes it easier to understand what t
         {
             // Start the engine here
         }
-
     }
 
     /// <summary>
@@ -852,7 +913,6 @@ It improves the readability of the code and makes it easier to understand what t
         /// A message transported with the event args
         /// </summary>
         public string Message { get; set; }
-
     }
 ```
 
@@ -933,7 +993,6 @@ It improves the readability of the code and makes it easier to understand what t
         /// A message transported with the event args
         /// </summary>
         public string Message { get; set; }
-
     }
 
     /// <summary>
@@ -952,7 +1011,6 @@ It improves the readability of the code and makes it easier to understand what t
     /// </summary>
     public class Car : ICar
     {
-
         private readonly IEngine _engine;
 
         /// <summary>
@@ -968,17 +1026,14 @@ It improves the readability of the code and makes it easier to understand what t
 
         }
 
-
         /// <summary>
         /// Event fired when engine is started
         /// </summary>
-
         public event EngineStartedHandler EngineStartedEvent;
 
         /// <summary>
         /// Name of the car type
         /// </summary>
-
         public string TypeName { get; set; }
 
         /// <summary>
@@ -1001,19 +1056,16 @@ It improves the readability of the code and makes it easier to understand what t
             };
 
             EngineStartedEvent?.Invoke(this, args);
-
         }
     }
 
     public delegate void EngineStartedHandler(object sender, EngineStartedEventHandlerArgs args);
-
 
     /// <summary>
     /// Class representing the engine of the car
     /// </summary>
     public class Engine : IEngine
     {
-
         /// <summary>
         /// Start the engine of the car
         /// </summary>
@@ -1021,7 +1073,6 @@ It improves the readability of the code and makes it easier to understand what t
         {
             // Start the engine here
         }
-
     }
 ```
 
@@ -1103,20 +1154,16 @@ It improves the readability of the code and makes it easier to understand what t
             // Store the injected instance locally: loose coupling
             // *****************************
             Engine = engine;
-
         }
-
 
         /// <summary>
         /// Event fired when engine is started
         /// </summary>
-
         public event EngineStartedHandler EngineStartedEvent;
 
         /// <summary>
         /// Name of the car type
         /// </summary>
-
         public string TypeName { get; set; }
 
         /// <summary>
@@ -1151,7 +1198,6 @@ It improves the readability of the code and makes it easier to understand what t
     /// </summary>
     public abstract class CarBrandA : Car
     {
-
         /// <summary>
         /// Default ctor
         /// </summary>
@@ -1188,7 +1234,6 @@ It improves the readability of the code and makes it easier to understand what t
 
             FireEngineStartedEvent();
         }
-
     }
 
     /// <summary>
@@ -1216,7 +1261,6 @@ It improves the readability of the code and makes it easier to understand what t
 
             FireEngineStartedEvent();
         }
-
     }
 
 
@@ -1226,7 +1270,6 @@ It improves the readability of the code and makes it easier to understand what t
     /// </summary>
     public class Engine : IEngine
     {
-
         /// <summary>
         /// Start the engine of the car
         /// </summary>
@@ -1234,7 +1277,6 @@ It improves the readability of the code and makes it easier to understand what t
         {
             // Start the engine here
         }
-
     }
 ```
 
@@ -1300,6 +1342,53 @@ It improves the readability of the code and makes it easier to understand what t
 ```
 
 ### Loosely coupled approach using a DI container
+
+``` csharp
+/// <summary>
+/// Configure the DI container
+/// </summary>
+/// <returns>Configured DI container</returns>
+public DiContainer ContainerSetup()
+{
+    var diContainer = new DiContainer();
+
+    diContainer.AddSingleton<IEngineFactory, EngineFactory>();
+    diContainer.AddSingleton<ICarFactory, CarFactory>();
+
+    diContainer.BuildServiceProvider();
+
+    return diContainer;
+}
+
+[Test]
+public void CarBrandAModelX_StartEngine_EventEngineStartedFired()
+{
+    // Arrange 
+    var diContainer = ContainerSetup();
+    _wasEventFired = false;
+
+    // Create the instance of the target class now with injected dependency
+    var factory = diContainer.Get<ICarFactory>();
+
+    var car = factory.CreateInstance(typeof(CarBrandAModelX));
+
+    // Register the even CarOnEngineStartedEvent
+    car.EngineStartedEvent += CarOnEngineStartedEvent;
+
+    // Act
+    car.StartEngine();
+
+    // Assert
+    Wait.Until(() => _wasEventFired);
+
+    Assert.That(_wasEventFired, Is.True);
+}
+```
+
+``` csharp
+
+
+```
 
 A DI container is responsible is to store the information of all types of available objects in app and how to create it.
 

@@ -7,7 +7,7 @@ using CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection
 namespace CodingBasics.Tests.DependencyHandling;
 
 [TestFixture]
-public class C02_LooselyCoupledTests
+public class C02LooselyCoupledTests
 {
     //[SetUp]
     //public void Setup()

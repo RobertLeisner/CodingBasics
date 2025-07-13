@@ -1,4 +1,6 @@
-﻿namespace CodingBasics.DependencyHandling.C03_InversionOfControl_DependencyInjection_with_Interfaces;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+namespace CodingBasics.DependencyHandling.C03_InversionOfControl_DependencyInjection_with_Interfaces;
 
 /// <summary>
 /// Interface for car implementations

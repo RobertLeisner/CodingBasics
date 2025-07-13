@@ -1,4 +1,6 @@
-﻿namespace CodingBasics.Inheritance.C01_Simple_Inheritance;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+namespace CodingBasics.Inheritance.C01_Simple_Inheritance;
 
 /// <summary>
 /// Base class car brand A

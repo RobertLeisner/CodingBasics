@@ -1,4 +1,6 @@
-﻿namespace CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+namespace CodingBasics.DependencyHandling.C02_InversionOfControl_DependencyInjection;
 
 /// <summary>
 /// Args transported with the "engine started event". May be enhanced with additional properties

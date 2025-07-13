@@ -1,10 +1,5 @@
 ﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen. All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CodingBasics.Inheritance.C01_Simple_Inheritance;
 
 namespace CodingBasics.Tests.Inheritance

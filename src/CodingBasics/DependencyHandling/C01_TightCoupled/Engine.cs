@@ -1,4 +1,6 @@
-﻿namespace CodingBasics.DependencyHandling.C01_TightCoupled;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+namespace CodingBasics.DependencyHandling.C01_TightCoupled;
 
 /// <summary>
 /// Class representing the engine of the car

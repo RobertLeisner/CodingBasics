@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿// Copyright (c) Bodoconsult EDV-Dienstleistungen GmbH. All rights reserved.
+
+using System.Diagnostics;
 
 namespace CodingBasics.Inheritance.C02_Inheritance_with_overriding;
 

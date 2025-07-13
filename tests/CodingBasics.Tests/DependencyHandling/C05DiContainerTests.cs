@@ -32,8 +32,6 @@ public class C05DiContainerTests
         return diContainer;
     }
 
-    
-
     [Test]
     public void CarBrandAModelX_StartEngine_EventEngineStartedFired()
     {
